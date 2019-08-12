@@ -1,0 +1,62 @@
+{
+    "identityPoolName": "phototranslate1a58bd43_identitypool_1a58bd43",
+    "allowUnauthenticatedIdentities": true,
+    "openIdLambdaRoleName": "photot1a58bd43_openid_lambda_role",
+    "resourceNameTruncated": "photot1a58bd43",
+    "userPoolName": "phototranslate1a58bd43_userpool_1a58bd43",
+    "autoVerifiedAttributes": [
+        "email"
+    ],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": [
+        "SMS Text Message"
+    ],
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": [
+        "email"
+    ],
+    "userpoolClientName": "photot1a58bd43_app_client",
+    "userpoolClientGenerateSecret": true,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": [
+        "email"
+    ],
+    "userpoolClientReadAttributes": [
+        "email"
+    ],
+    "mfaLambdaRole": "photot1a58bd43_totp_lambda_role",
+    "userpoolClientLambdaRole": "photot1a58bd43_userpoolclient_lambda_role",
+    "userpoolClientSetAttributes": false,
+    "resourceName": "phototranslate1a58bd43",
+    "authSelections": "identityPoolAndUserPool",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    },
+    "unauthRoleArn": {
+        "Fn::GetAtt": [
+            "UnauthRole",
+            "Arn"
+        ]
+    },
+    "useDefault": "default",
+    "usernameAttributes": [
+        "phone_number"
+    ],
+    "additionalQuestions": [],
+    "dependsOn": []
+}

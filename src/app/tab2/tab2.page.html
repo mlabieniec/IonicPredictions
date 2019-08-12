@@ -1,9 +1,34 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab Two
+      Settings
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+
+    <ion-list>
+      <ion-list-header>Translation Settings</ion-list-header>
+    
+      <ion-item>
+        <ion-label>Source Language</ion-label>
+        <ion-select placeholder="Select One" (ionChange)="selectSource($event)" [value]="defaultSource">
+          <ion-select-option value="en">English</ion-select-option>
+          <ion-select-option value="no">Norweigen</ion-select-option>
+          <ion-select-option value="de">German</ion-select-option>
+        </ion-select>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label>Target Language</ion-label>
+        <ion-select placeholder="Select One" (ionChange)="selectTarget($event)" [value]="defaultTarget">
+          <ion-select-option value="en">English</ion-select-option>
+          <ion-select-option value="no">Norweigen</ion-select-option>
+          <ion-select-option value="de">German</ion-select-option>
+        </ion-select>
+      </ion-item>
+    
+    </ion-list>
+
+</ion-content>

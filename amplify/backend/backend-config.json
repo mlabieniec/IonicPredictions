@@ -1,0 +1,21 @@
+{
+	"auth": {
+		"phototranslate1a58bd43": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation"
+		}
+	},
+	"predictions": {
+		"identifyText360eb9c4": {
+			"providerPlugin": "awscloudformation",
+			"service": "Rekognition",
+			"dependsOn": [],
+			"identifyType": "identifyText"
+		},
+		"translateTextd8fbec95": {
+			"providerPlugin": "awscloudformation",
+			"service": "Translate",
+			"convertType": "translateText"
+		}
+	}
+}
