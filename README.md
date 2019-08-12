@@ -7,7 +7,5 @@ An Ionic app that uses AWS Amplify (Predictions) AI/ML services to identify text
 ```bash
 
 $ amplify init
-$ amplify add predictions # choose identify
-$ amplify add predictions # choose translate (text)
 
 ```

@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ionic build --prod --service-worker",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
