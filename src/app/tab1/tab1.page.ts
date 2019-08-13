@@ -92,4 +92,9 @@ export class Tab1Page {
     })
   }
 
+  copyText(textArea:any) {
+    textArea.select();
+    document.execCommand('copy');
+  }
+
 }

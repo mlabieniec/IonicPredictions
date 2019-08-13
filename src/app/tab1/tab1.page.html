@@ -13,7 +13,7 @@
     <ion-card *ngIf="photo">
       <img [src]="photo" alt="" />
       <ion-card-content>
-        <h2>{{translatedText}}</h2>
+        <textarea #textArea rows="3" (click)="copyText(textArea)">{{translatedText}}</textarea>
       </ion-card-content>
     </ion-card>
 
