@@ -16,6 +16,12 @@
 			"providerPlugin": "awscloudformation",
 			"service": "Translate",
 			"convertType": "translateText"
+		},
+		"identifyEntitiesd04d1d1d": {
+			"providerPlugin": "awscloudformation",
+			"service": "Rekognition",
+			"dependsOn": [],
+			"identifyType": "identifyEntities"
 		}
 	},
 	"hosting": {

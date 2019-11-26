@@ -22,7 +22,7 @@ export class Tab1Page {
   constructor(public loadingController: LoadingController) { 
     Hub.listen('settings', (data) => {
       const { payload } = data;
-      console.log(payload);
+      // console.log(payload);
       if (payload.event === 'source')
         this.sourceLang = payload.data;
       
