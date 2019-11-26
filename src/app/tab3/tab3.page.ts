@@ -63,6 +63,7 @@ export class Tab3Page {
   }
 
   drawBoundingBoxes(entities:any) {
+    console.log('entities: ', entities);
     let canvas=document.getElementById('imgCanvas') as HTMLCanvasElement;
     let ctx=canvas.getContext("2d");
     let img=document.getElementById("imgEntities") as HTMLImageElement;
@@ -83,6 +84,7 @@ export class Tab3Page {
       context.strokeStyle = entity.color;
       context.stroke();
     });
+    canvas.setAttribute('style','width: 100%;');
   }
 
 }
