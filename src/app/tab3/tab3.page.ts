@@ -14,6 +14,7 @@ export class Tab3Page {
   public photo:string;
   public loading:any;
   public entities = [];
+  public colors = ["red","green","blue","orange","black","yellow"]
 
   constructor(public loadingController: LoadingController) {
     Hub.listen('settings', (data) => {
@@ -50,6 +51,7 @@ export class Tab3Page {
       }
     }).then(result => {
       this.entities = result.entities;
+      this.entities.forEach((entity) => entity.color = "#"+Math.floor(Math.random()*16777215).toString(16))
       setTimeout(()=> {
         this.drawBoundingBoxes(this.entities);
       });
@@ -78,7 +80,7 @@ export class Tab3Page {
       context.beginPath();
       context.rect(x, y, width, height);
       context.lineWidth = 5;
-      context.strokeStyle = 'red';
+      context.strokeStyle = entity.color;
       context.stroke();
     });
   }

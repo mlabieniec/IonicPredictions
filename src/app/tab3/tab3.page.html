@@ -15,7 +15,9 @@
       <canvas id="imgCanvas"></canvas>
       <ion-list>
         <ion-item *ngFor="let entity of entities">
-          <ion-label>{{entity.metadata.name}}</ion-label>
+          <ion-label [ngStyle]="{'color': entity.color}">
+            {{entity.metadata.name}}
+          </ion-label>
         </ion-item>
       </ion-list>
     </div>
