@@ -1,4 +1,4 @@
-# Photo Translator
+# Amplify Predictions PWA
 
 An Ionic app that uses [AWS Amplify Predictions](https://aws-amplify.github.io/docs/js/predictions) AI/ML services to:
 
