@@ -22,6 +22,12 @@
 			"service": "Rekognition",
 			"dependsOn": [],
 			"identifyType": "identifyEntities"
+		},
+		"identifyLabelsdff85f2a": {
+			"providerPlugin": "awscloudformation",
+			"service": "Rekognition",
+			"dependsOn": [],
+			"identifyType": "identifyLabels"
 		}
 	},
 	"hosting": {

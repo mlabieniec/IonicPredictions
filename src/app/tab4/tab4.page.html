@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Label Entities</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <input #filepicker type="file" (change)="onChoose($event)" accept="image/*" class="custom-file-input">
+
+    <div *ngIf="photo">
+      <img id="imgEntities" [src]="photo" alt="Predictions Detect Labels" />
+      <ion-list>
+        <ion-item *ngFor="let label of entities">
+          <ion-label [class.confident]="label.metadata.confidence > 50">
+            {{label.name}}
+            <ion-progress-bar [value]="label.metadata.confidence/100"></ion-progress-bar>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <h1 style="text-align:center;margin-top:40%;font-size:250%;opacity:0.2;" *ngIf="!photo">
+      Click below to select or take a photo <br/>
+      <ion-icon name="arrow-round-down" style="font-size:128px;"></ion-icon>
+    </h1>
+
+</ion-content>
+
+<ion-footer>
+    <p style="opacity:0.3;text-align: center;">Label real world objects</p>
+    <ion-button (click)="filepicker.click()" size="large" expand="full">Take or Choose a Photo</ion-button>
+</ion-footer>
