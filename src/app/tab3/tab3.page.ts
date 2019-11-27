@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import Predictions from '@aws-amplify/predictions';
 import { LoadingController } from '@ionic/angular';
 import { Hub } from '@aws-amplify/core';
-import awsconfig from 'src/aws-exports';
 
 @Component({
   selector: 'app-tab3',
@@ -14,7 +13,6 @@ export class Tab3Page {
   public photo:string;
   public loading:any;
   public entities = [];
-  public colors = ["red","green","blue","orange","black","yellow"]
 
   constructor(public loadingController: LoadingController) {
     Hub.listen('settings', (data) => {
@@ -63,7 +61,6 @@ export class Tab3Page {
   }
 
   drawBoundingBoxes(entities:any) {
-    console.log('entities: ', entities);
     let canvas=document.getElementById('imgCanvas') as HTMLCanvasElement;
     let ctx=canvas.getContext("2d");
     let img=document.getElementById("imgEntities") as HTMLImageElement;
