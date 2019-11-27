@@ -9,10 +9,11 @@
     <input #filepicker type="file" (change)="onChoose($event)" accept="image/*" class="custom-file-input">
 
     <div *ngIf="photo">
-      <img id="imgEntities" [src]="photo" alt="Predictions Detect Labels" />
+      <img id="imgLabels" [src]="photo" alt="Predictions Detect Entities"/>
+      <canvas id="imgLabelsCanvas" style="width:100%"></canvas>
       <ion-list>
         <ion-item *ngFor="let label of entities">
-          <ion-label [class.confident]="label.metadata.confidence > 50">
+          <ion-label [class.confident]="label.metadata.confidence > 50" [ngStyle]="{'color': label.color}">
             {{label.name}}
             <ion-progress-bar [value]="label.metadata.confidence/100"></ion-progress-bar>
           </ion-label>

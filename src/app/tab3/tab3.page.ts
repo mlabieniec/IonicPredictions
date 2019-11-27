@@ -61,25 +61,27 @@ export class Tab3Page {
   }
 
   drawBoundingBoxes(entities:any) {
-    let canvas=document.getElementById('imgCanvas') as HTMLCanvasElement;
-    let ctx=canvas.getContext("2d");
-    let img=document.getElementById("imgEntities") as HTMLImageElement;
+    let canvas = document.getElementById('imgEntitiesCanvas') as HTMLCanvasElement;
+    let ctx = canvas.getContext("2d");
+    let img = document.getElementById("imgEntities") as HTMLImageElement;
     canvas.width = img.width;
     canvas.height = img.height;
     ctx.drawImage(img,0,0,img.width,img.height);  
     img.hidden = true;
     let context = canvas.getContext('2d');
     entities.forEach(entity => {
-      let bb = entity.boundingBox,
-          width = bb.width * img.width, 
-          height = bb.height * img.height,
-          x = bb.left * img.width,
-          y = bb.top * img.height
-      context.beginPath();
-      context.rect(x, y, width, height);
-      context.lineWidth = 5;
-      context.strokeStyle = entity.color;
-      context.stroke();
+      setTimeout(()=>{
+        let bb = entity.boundingBox,
+            width = bb.width * img.width, 
+            height = bb.height * img.height,
+            x = bb.left * img.width,
+            y = bb.top * img.height
+        context.beginPath();
+        context.rect(x, y, width, height);
+        context.lineWidth = 5;
+        context.strokeStyle = entity.color;
+        context.stroke();
+      });
     });
     canvas.setAttribute('style','width: 100%;');
   }
