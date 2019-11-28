@@ -12,7 +12,7 @@ export class Tab3Page {
 
   public photo:string;
   public loading:any;
-  public entities = [];
+  public entities:Array<any>;
 
   constructor(public loadingController: LoadingController) {
     Hub.listen('settings', (data) => {
