@@ -11,11 +11,18 @@ export class Tab2Page {
 
   defaultSource = awsconfig.predictions.convert.translateText.defaults.sourceLanguage;
   defaultTarget = awsconfig.predictions.convert.translateText.defaults.targetLanguage;
+  
+  celebDetect = awsconfig.predictions.identify.identifyEntities.celebrityDetectionEnabled as boolean;
 
-  constructor() {}
+  constructor() {
+    Hub.listen('settings', (data) => {
+      const { payload } = data;
+      this.celebDetect = payload.data;
+    });
+  }
 
   selectSource(evt) {
-    console.log(evt.target.value);
+    //console.log(evt.target.value);
     Hub.dispatch(
       'settings', 
       { 
@@ -25,13 +32,24 @@ export class Tab2Page {
   }
 
   selectTarget(evt) {
-    console.log(evt.target.value);
+    //console.log(evt.target.value);
     Hub.dispatch(
       'settings', 
       { 
           event: 'target', 
           data: evt.target.value
     });
+  }
+
+  toggleCelebDetect(evt) {
+    // console.log('celebrityDetectionEnabled: ', evt.detail.checked);
+    Hub.dispatch(
+      'settings',
+      {
+        event: 'celebrityDetectionEnabled',
+        data: evt.detail.checked
+      }
+    )
   }
 
 }

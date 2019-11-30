@@ -17,7 +17,8 @@
       <ion-list>
         <ion-item *ngFor="let entity of entities">
           <ion-label [ngStyle]="{'color': entity.color}">
-            {{entity.metadata.name}}
+            {{entity.metadata.name || entity.metadata.confidence}}
+            <ion-progress-bar *ngIf="entity.metadata.confidence" [value]="entity.metadata.confidence/100"></ion-progress-bar>
           </ion-label>
         </ion-item>
       </ion-list>
@@ -31,6 +32,9 @@
 </ion-content>
 
 <ion-footer>
-    <p style="opacity:0.3;text-align: center;">Celebrity detection</p>
+    <p style="opacity:0.3;text-align: center;cursor: pointer;" (click)="toggleCelebDetect()">Celebrity detection 
+      <strong *ngIf="celebDetect">ENABLED</strong>
+      <strong *ngIf="!celebDetect">DISABLED</strong>
+    </p>
     <ion-button (click)="filepicker.click()" size="large" expand="full">Take or Choose a Photo</ion-button>
 </ion-footer>

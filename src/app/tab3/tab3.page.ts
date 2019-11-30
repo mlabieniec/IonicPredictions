@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import Predictions from '@aws-amplify/predictions';
 import { LoadingController } from '@ionic/angular';
 import { Hub } from '@aws-amplify/core';
+import awsconfig from 'src/aws-exports';
 
 @Component({
   selector: 'app-tab3',
@@ -13,11 +14,12 @@ export class Tab3Page {
   public photo:string;
   public loading:any;
   public entities:Array<any>;
+  public celebDetect = awsconfig.predictions.identify.identifyEntities.celebrityDetectionEnabled;
 
   constructor(public loadingController: LoadingController) {
     Hub.listen('settings', (data) => {
       const { payload } = data;
-      console.log(payload);
+      this.celebDetect = payload.data;
     });
   }
 
@@ -45,9 +47,10 @@ export class Tab3Page {
         source: {
           file
         },
-        celebrityDetection: true
+        celebrityDetection: this.celebDetect
       }
     }).then(result => {
+      console.log('result: ', result);
       this.entities = result.entities;
       this.entities.forEach((entity) => entity.color = "#"+Math.floor(Math.random()*16777215).toString(16))
       setTimeout(()=> {
@@ -84,6 +87,17 @@ export class Tab3Page {
       });
     });
     canvas.setAttribute('style','width: 100%;');
+  }
+
+  toggleCelebDetect() {
+    this.celebDetect = !this.celebDetect;
+    Hub.dispatch(
+      'settings',
+      {
+        event: 'celebrityDetectionEnabled',
+        data: this.celebDetect
+      }
+    )
   }
 
 }
