@@ -1,26 +1,36 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="secondary">
-      <ion-button href="https://aws-amplify.github.io/" target="_blank">
+      <a href="https://aws-amplify.github.io/" target="_blank">
         <img class="toolbar-logo" src="assets/amplify.png" alt="Amplify" />
-      </ion-button>
+      </a>
     </ion-buttons>
     <ion-title>Translate</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+    <div>
+      <canvas id="imgTranslateCanvas">
+          <img id="imgTranslate" [src]="photo" alt="Predictions Translate" />
+      </canvas>
+      <ion-list>
+        <ion-item-sliding *ngFor="let entity of entities">
+          <ion-item>
+            <ion-label [ngStyle]="{'color': entity.color}">
+              {{entity.translatedText}}
+            </ion-label>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option (click)="generateTextToSpeech(entity.text)">Speak</ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </div>
+    
     <input #filepicker type="file" (change)="onChoose($event)" accept="image/*" class="custom-file-input">
 
-    <ion-card *ngIf="photo">
-      <img [src]="photo" alt="" />
-      <ion-card-content>
-        <textarea #textArea rows="3" (click)="copyText(textArea)">{{translatedText}}</textarea>
-      </ion-card-content>
-    </ion-card>
-
-    <h1 style="text-align:center;margin-top:40%;font-size:250%;opacity:0.2;" *ngIf="!photo">
+    <h1 style="text-align:center;font-size:250%;opacity:0.2;" *ngIf="!photo">
       Click below to select or take a photo <br/>
       <ion-icon name="arrow-round-down" style="font-size:128px;"></ion-icon>
     </h1>

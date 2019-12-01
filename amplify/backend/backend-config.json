@@ -28,6 +28,11 @@
 			"service": "Rekognition",
 			"dependsOn": [],
 			"identifyType": "identifyLabels"
+		},
+		"speechGenerator3e6f2f09": {
+			"providerPlugin": "awscloudformation",
+			"service": "Polly",
+			"convertType": "speechGenerator"
 		}
 	},
 	"hosting": {

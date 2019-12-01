@@ -1,0 +1,14 @@
+{
+    "resourceName": "speechGenerator3e6f2f09",
+    "convertPolicyName": "speechGeneratorPolicy3e6f2f09",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "convertType": "speechGenerator",
+    "language": "nb-NO",
+    "voice": "Liv",
+    "access": "authAndGuest"
+}

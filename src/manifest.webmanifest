@@ -1,7 +1,7 @@
 {
   "name": "Amplify Predictions",
   "short_name": "Amplify Predictions",
-  "theme_color": "#1976d2",
+  "theme_color": "#feae32",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "/",
