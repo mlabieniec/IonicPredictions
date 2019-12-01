@@ -12,11 +12,11 @@ import { LoggerService } from '../logger.service';
  * is disabled, the confidence score will be rendered.
  */
 @Component({
-  selector: 'app-tab3',
-  templateUrl: 'tab3.page.html',
-  styleUrls: ['tab3.page.scss']
+  selector: 'app-identify-tab',
+  templateUrl: 'identify.page.html',
+  styleUrls: ['identify.page.scss']
 })
-export class Tab3Page {
+export class IdentifyPage {
 
   public photo:string;
   public loading:any;

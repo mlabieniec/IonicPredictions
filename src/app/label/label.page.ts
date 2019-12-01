@@ -7,11 +7,11 @@ import Predictions from '@aws-amplify/predictions';
  * Identify real world objects in an image. 
  */
 @Component({
-  selector: 'app-tab4',
-  templateUrl: './tab4.page.html',
-  styleUrls: ['./tab4.page.scss'],
+  selector: 'app-label-tab',
+  templateUrl: './label.page.html',
+  styleUrls: ['./label.page.scss'],
 })
-export class Tab4Page {
+export class LabelPage {
 
   public photo:string;
   public loading:any;

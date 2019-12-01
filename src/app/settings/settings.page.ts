@@ -9,11 +9,11 @@ import { Hub } from '@aws-amplify/core';
  * generated via the Amplify CLI 
  */
 @Component({
-  selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss']
+  selector: 'app-settings-tab',
+  templateUrl: 'settings.page.html',
+  styleUrls: ['settings.page.scss']
 })
-export class Tab2Page {
+export class SettingsPage {
   
   // Source language
   public defaultSource = awsconfig.predictions.convert.translateText.defaults.sourceLanguage;

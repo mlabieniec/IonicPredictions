@@ -11,11 +11,11 @@ import { LoggerService } from '../logger.service';
  * can be changed via the Settings (tab2) UI.
  */
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss']
+  selector: 'app-translate-tab',
+  templateUrl: 'translate.page.html',
+  styleUrls: ['translate.page.scss']
 })
-export class Tab1Page {
+export class TranslatePage {
 
   public translatedText = "Choose or Take a Photo"
   public identifiedText:string;
