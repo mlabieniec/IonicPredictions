@@ -24,6 +24,9 @@
             <ion-progress-bar [value]="label.metadata.confidence/100"></ion-progress-bar>
           </ion-label>
         </ion-item>
+        <ion-item *ngIf="entities && entities.length === 0">
+          <ion-label>No Entities Found</ion-label>
+        </ion-item>
       </ion-list>
     </div>
 

@@ -101,7 +101,7 @@ export class Tab3Page {
             y = bb.top * img.height
         context.beginPath();
         context.rect(x, y, width, height);
-        context.lineWidth = 5;
+        context.lineWidth = 10;
         context.strokeStyle = entity.color;
         context.stroke();
       });

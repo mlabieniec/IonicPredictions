@@ -21,7 +21,7 @@ export class Tab1Page {
   public identifiedText:string;
   public photo:string;
   public loading:any;
-  public entities: Array<Any>;
+  public entities: Array<any>;
   public drawComplete:boolean;
   public sourceLang = awsconfig.predictions.convert.translateText.defaults.sourceLanguage;
   public targetLang = awsconfig.predictions.convert.translateText.defaults.targetLanguage;

@@ -15,7 +15,7 @@ export class Tab4Page {
 
   public photo:string;
   public loading:any;
-  public entities = [];
+  public entities:Array<any>;
 
   constructor( public loadingController: LoadingController ) { }
 
@@ -92,7 +92,7 @@ export class Tab4Page {
             y = bb.top * img.height
         context.beginPath();
         context.rect(x, y, width, height);
-        context.lineWidth = 5;
+        context.lineWidth = 10;
         context.strokeStyle = color;
         context.stroke();
       });

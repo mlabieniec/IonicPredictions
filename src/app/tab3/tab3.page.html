@@ -26,6 +26,9 @@
             <ion-progress-bar *ngIf="entity.metadata.confidence" [value]="entity.metadata.confidence/100"></ion-progress-bar>
           </ion-label>
         </ion-item>
+        <ion-item *ngIf="entities && entities.length === 0">
+          <ion-label>No {{ (celebDetect)?'Celebrity':'' }} Faces Found</ion-label>
+        </ion-item>
       </ion-list>
     </div>
 
