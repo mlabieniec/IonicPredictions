@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import Predictions from '@aws-amplify/predictions';
 
+/**
+ * Amplify Predicitons - Identify Labels
+ * Identify real world objects in an image. 
+ */
 @Component({
   selector: 'app-tab4',
   templateUrl: './tab4.page.html',
@@ -13,8 +17,13 @@ export class Tab4Page {
   public loading:any;
   public entities = [];
 
-  constructor(public loadingController: LoadingController) { }
+  constructor( public loadingController: LoadingController ) { }
 
+  /**
+   * Fired when an image is uploaded or a photo is taken
+   * via a mobile device camera
+   * @param evt CustomEvent
+   */
   public async onChoose(evt:any) {
     this.loading = await this.loadingController.create({
       message: 'Identifying...'
@@ -39,10 +48,10 @@ export class Tab4Page {
         source: {
           file,
         },
-        type: "ALL" // "LABELS" will detect objects , "UNSAFE" will detect if content is not safe, "ALL" will do both default on aws-exports.js
+        // "LABELS" will detect objects , "UNSAFE" will detect if content is not safe, "ALL" will do both default on aws-exports.js
+        type: "ALL"
       }
     }).then(result => {
-      //console.log('result: ', result);
       this.entities = result.labels;
       this.entities.forEach((entity) => {
         if (entity.boundingBoxes.length > 0) {
@@ -60,7 +69,13 @@ export class Tab4Page {
     })
   }
 
-  drawBoundingBoxes(entities:any, color:string) {
+  /**
+   * Draw bounding boxes around the found entities, color
+   * coding them per found entity based on the past in color
+   * @param entities Array<Any>
+   * @param color String
+   */
+  private drawBoundingBoxes(entities:any, color:string): void {
     let canvas = document.getElementById('imgLabelsCanvas') as HTMLCanvasElement;
     let ctx = canvas.getContext("2d");
     let img = document.getElementById("imgLabels") as HTMLImageElement;

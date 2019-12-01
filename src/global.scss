@@ -25,10 +25,42 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+
+
+:root {
+    --ion-color-primary: #feae32;
+    --ion-color-primary-rgb: 254,174,50;
+    --ion-color-primary-contrast: #000000;
+    --ion-color-primary-contrast-rgb: 0,0,0;
+    --ion-color-primary-shade: #e0992c;
+    --ion-color-primary-tint: #feb647;
+}
+
+.ion-color-primary {
+    --ion-color-base: var(--ion-color-primary);
+    --ion-color-base-rgb: var(--ion-color-primary-rgb);
+    --ion-color-contrast: var(--ion-color-primary-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-primary-contrast-rgb);
+    --ion-color-shade: var(--ion-color-primary-shade);
+    --ion-color-tint: var(--ion-color-primary-tint);
+}
+
+ion-button {
+    color: white;
+}
+
+ion-title {
+    color: var(--ion-color-primary-tint);
+}
+
 .custom-file-input {
     display: none;
 }
 
 textarea {
     width: 100%;
+}
+
+.toolbar-logo {
+    height: 48px;
 }

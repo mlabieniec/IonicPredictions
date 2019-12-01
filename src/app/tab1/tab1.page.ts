@@ -4,6 +4,11 @@ import { LoadingController } from '@ionic/angular';
 import { Hub } from '@aws-amplify/core';
 import awsconfig from 'src/aws-exports';
 
+/**
+ * Amplify Predictions - Translation
+ * Settings are pulled from the aws-exports.js file and 
+ * can be changed via the Settings (tab2) UI.
+ */
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -19,10 +24,10 @@ export class Tab1Page {
   public sourceLang = awsconfig.predictions.convert.translateText.defaults.sourceLanguage;
   public targetLang = awsconfig.predictions.convert.translateText.defaults.targetLanguage;
 
-  constructor(public loadingController: LoadingController) { 
+  constructor( public loadingController: LoadingController ) { 
+    // Listen for changes in settings from the settings view
     Hub.listen('settings', (data) => {
       const { payload } = data;
-      // console.log(payload);
       if (payload.event === 'source')
         this.sourceLang = payload.data;
       
@@ -31,6 +36,13 @@ export class Tab1Page {
     });
   }
 
+  /**
+   * Fired when a photo is chosen from the file inspector
+   * or when a photo is taken via a mobile device. Will 
+   * initially identify text from an image, then will call
+   * translate()
+   * @param evt CustomEvent
+   */
   public async onChoose(evt:any) {
     this.loading = await this.loadingController.create({
       message: 'Analyzing...'
@@ -45,7 +57,6 @@ export class Tab1Page {
       file = evt.dataTransfer.files[0];
     }
     if (!file) { return; }
-    //console.log('file: ', file);
     const that = this;
     const reader = new FileReader();
     reader.onload = function(e) {
@@ -53,16 +64,18 @@ export class Tab1Page {
       that.photo = target.result;
     };
     reader.readAsDataURL(file);
+    // First, identify text
     Predictions.identify({
       text: {
         source: {
           file,
         },
-        format: "PLAIN", // Available options "PLAIN", "FORM", "TABLE", "ALL"
+        // Available options "PLAIN", "FORM", "TABLE", "ALL"
+        format: "PLAIN",
       }
     }).then((result:any) => {
-      //console.log('result: ', result);
       this.identifiedText = result.text.fullText;
+      // then translate the text
       this.translate(this.identifiedText);
     })
       .catch(err => {
@@ -70,24 +83,30 @@ export class Tab1Page {
         this.loading.dismiss();
       })
   }
-
-  translate(textToTranslate:string) {
+  
+  /**
+   * Translate the text returned from Predictions.identify
+   * @param textToTranslate String
+   */
+  private translate(textToTranslate:string): void {
     this.loading.message = "Translating..."
     Predictions.convert({
       translateText: {
         source: {
           text: textToTranslate,
-          language : this.sourceLang // defaults configured on aws-exports.js
+          // defaults configured on aws-exports.js
+          // update-able via the settings ui
+          language : this.sourceLang
           // supported languages https://docs.aws.amazon.com/translate/latest/dg/how-it-works.html#how-it-works-language-codes
         },
         targetLanguage: this.targetLang
       }
     }).then(result => {
-      console.log(JSON.stringify(result, null, 2));
+      // console.log(JSON.stringify(result, null, 2));
       this.translatedText = result.text;
       this.loading.dismiss();
     }).catch(err => {
-      console.log(JSON.stringify(err, null, 2));
+      // console.log(JSON.stringify(err, null, 2));
       this.loading.dismiss();
     })
   }

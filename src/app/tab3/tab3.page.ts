@@ -4,6 +4,12 @@ import { LoadingController } from '@ionic/angular';
 import { Hub } from '@aws-amplify/core';
 import awsconfig from 'src/aws-exports';
 
+/**
+ * Amplify Predictions - Identify Entities
+ * Identify entities from an image, optionally detecting
+ * celebrities and displaying their name. If celebrity detection
+ * is disabled, the confidence score will be rendered.
+ */
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
@@ -17,13 +23,19 @@ export class Tab3Page {
   public celebDetect = awsconfig.predictions.identify.identifyEntities.celebrityDetectionEnabled;
 
   constructor(public loadingController: LoadingController) {
+    // Listen for settings changes via the settings UI
     Hub.listen('settings', (data) => {
       const { payload } = data;
       this.celebDetect = payload.data;
     });
   }
 
-  public async onChoose(evt:any) {
+  /**
+   * Fired when a image is selected, or a photo is taken
+   * via a mobile device camera.
+   * @param evt CustomEvent
+   */
+  public async onChoose(evt) {
     this.loading = await this.loadingController.create({
       message: 'Identifying...'
     });
@@ -63,7 +75,12 @@ export class Tab3Page {
     })
   }
 
-  drawBoundingBoxes(entities:any) {
+  /**
+   * Draw bounding boxes around the entities that are found
+   * using the boundingBox values returned from the service
+   * @param entities Array<Any>
+   */
+  private drawBoundingBoxes(entities:any) {
     let canvas = document.getElementById('imgEntitiesCanvas') as HTMLCanvasElement;
     let ctx = canvas.getContext("2d");
     let img = document.getElementById("imgEntities") as HTMLImageElement;
@@ -89,6 +106,10 @@ export class Tab3Page {
     canvas.setAttribute('style','width: 100%;');
   }
 
+  /**
+   * Toggles celebrity detection on/off and fires a Hub
+   * event to change the value in the settings UI
+   */
   toggleCelebDetect() {
     this.celebDetect = !this.celebDetect;
     Hub.dispatch(
