@@ -3,6 +3,7 @@ import Predictions from '@aws-amplify/predictions';
 import { LoadingController } from '@ionic/angular';
 import { Hub } from '@aws-amplify/core';
 import awsconfig from 'src/aws-exports';
+import { LoggerService } from '../logger.service';
 
 /**
  * Amplify Predictions - Translation
@@ -20,13 +21,15 @@ export class Tab1Page {
   public identifiedText:string;
   public photo:string;
   public loading:any;
-  public entities = [];
+  public entities: Array<Any>;
+  public drawComplete:boolean;
   public sourceLang = awsconfig.predictions.convert.translateText.defaults.sourceLanguage;
   public targetLang = awsconfig.predictions.convert.translateText.defaults.targetLanguage;
   
 
   constructor( 
-    public loadingController: LoadingController ) { 
+    public loadingController: LoadingController,
+    private logger: LoggerService ) { 
     // Listen for changes in settings from the settings view
     Hub.listen('settings', (data) => {
       const { payload } = data;
@@ -75,7 +78,7 @@ export class Tab1Page {
         format: "PLAIN",
       }
     }).then((result:any) => {
-      console.log('result: ', result);
+      this.logger.log('Predictions.identify',result);
       this.identifiedText = result.text.fullText;
       // Draw the bounding boxes
       this.entities = result.text.words;
@@ -83,14 +86,13 @@ export class Tab1Page {
         entity.color = "#"+Math.floor(Math.random()*16777215).toString(16)
         this.translate(entity);
       });
-      
+      this.loading.dismiss();
       setTimeout(()=> {
         this.drawBoundingBoxes(this.entities);
       });
-
     })
       .catch(err => {
-        console.log(JSON.stringify(err, null, 2));
+        this.logger.log('Predictions.identify -> Error', err);
         this.loading.dismiss();
       })
   }
@@ -113,12 +115,12 @@ export class Tab1Page {
         targetLanguage: this.targetLang
       }
     }).then(result => {
-      console.log(JSON.stringify(result, null, 2));
+      this.logger.log('Predictions.convert', result);
       this.translatedText = result.text;
       entity.translatedText = this.translatedText;
       this.loading.dismiss();
     }).catch(err => {
-      // console.log(JSON.stringify(err, null, 2));
+      this.logger.error('Predictions.convert', err);
       this.loading.dismiss();
     })
   }
@@ -134,15 +136,15 @@ export class Tab1Page {
       }
     }).then(result => {
       let AudioContext = (window as any).AudioContext || (window as any).webkitAudioContext;
-      console.log({ AudioContext });
+      // console.log({ AudioContext });
       const audioCtx = new AudioContext(); 
       const source = audioCtx.createBufferSource();
       audioCtx.decodeAudioData(result.audioStream, (buffer) => {
         source.buffer = buffer;
         source.connect(audioCtx.destination);
         source.start(0);
-      }, (err) => console.log({err}));
-    }).catch(err => console.log(err))
+      }, (err) => this.logger.error('audioCtx.decodeAudioData',err));
+    }).catch(err => this.logger.error('Predictions.convert', err));
   }
 
   /**
@@ -151,28 +153,34 @@ export class Tab1Page {
    * @param entities Array<Any>
    */
   private drawBoundingBoxes(entities:any) {
+    this.drawComplete = false;
     let canvas = document.getElementById('imgTranslateCanvas') as HTMLCanvasElement;
     let ctx = canvas.getContext("2d");
     let img = document.getElementById("imgTranslate") as HTMLImageElement;
     canvas.width = img.width;
     canvas.height = img.height;
     ctx.drawImage(img,0,0,img.width,img.height);  
-    img.hidden = true;
     let context = canvas.getContext('2d');
     entities.forEach(entity => {
       setTimeout(()=>{
-        let bb = entity.boundingBox,
-            width = bb.width * img.width, 
-            height = bb.height * img.height,
-            x = bb.left * img.width,
-            y = bb.top * img.height
-        context.beginPath();
-        context.rect(x, y, width, height);
-        context.lineWidth = 10;
-        context.strokeStyle = entity.color;
-        context.stroke();
+        try {
+          let bb = entity.boundingBox,
+              width = bb.width * img.width, 
+              height = bb.height * img.height,
+              x = bb.left * img.width,
+              y = bb.top * img.height
+          context.beginPath();
+          context.rect(x, y, width, height);
+          context.lineWidth = 10;
+          context.strokeStyle = entity.color;
+          context.stroke();
+        } catch(error) {
+          this.logger.log('context.stroke', error);
+        }
       });
     });
+    img.hidden = true;
+    this.drawComplete = true;
     canvas.setAttribute('style','width: 100%;');
   }
 

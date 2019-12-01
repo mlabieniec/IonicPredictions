@@ -3,6 +3,7 @@ import Predictions from '@aws-amplify/predictions';
 import { LoadingController } from '@ionic/angular';
 import { Hub } from '@aws-amplify/core';
 import awsconfig from 'src/aws-exports';
+import { LoggerService } from '../logger.service';
 
 /**
  * Amplify Predictions - Identify Entities
@@ -22,7 +23,9 @@ export class Tab3Page {
   public entities:Array<any>;
   public celebDetect = awsconfig.predictions.identify.identifyEntities.celebrityDetectionEnabled;
 
-  constructor(public loadingController: LoadingController) {
+  constructor(
+    public loadingController: LoadingController,
+    private logger: LoggerService ) {
     // Listen for settings changes via the settings UI
     Hub.listen('settings', (data) => {
       const { payload } = data;
@@ -62,7 +65,7 @@ export class Tab3Page {
         celebrityDetection: this.celebDetect
       }
     }).then(result => {
-      console.log('result: ', result);
+      this.logger.log('Predictions.identify', result);
       this.entities = result.entities;
       this.entities.forEach((entity) => entity.color = "#"+Math.floor(Math.random()*16777215).toString(16))
       setTimeout(()=> {
@@ -70,7 +73,7 @@ export class Tab3Page {
       });
       this.loading.dismiss();
     }).catch(err => {
-      console.log(JSON.stringify(err, null, 2));
+      this.logger.error('Predictions.identify', err);
       this.loading.dismiss();
     })
   }
