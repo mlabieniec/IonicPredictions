@@ -16,11 +16,11 @@ import { Hub } from '@aws-amplify/core';
 export class Tab2Page {
   
   // Source language
-  private defaultSource = awsconfig.predictions.convert.translateText.defaults.sourceLanguage;
+  public defaultSource = awsconfig.predictions.convert.translateText.defaults.sourceLanguage;
   // Target language
-  private defaultTarget = awsconfig.predictions.convert.translateText.defaults.targetLanguage;
+  public defaultTarget = awsconfig.predictions.convert.translateText.defaults.targetLanguage;
   // Enable celebrity detection in identify
-  private celebDetect = awsconfig.predictions.identify.identifyEntities.celebrityDetectionEnabled as boolean;
+  public celebDetect = awsconfig.predictions.identify.identifyEntities.celebrityDetectionEnabled as boolean;
 
   constructor() {
     // Listen for settings changed from other views
