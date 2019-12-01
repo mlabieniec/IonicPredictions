@@ -133,7 +133,7 @@ export class Tab1Page {
         // list of different options are here https://docs.aws.amazon.com/polly/latest/dg/voicelist.html
       }
     }).then(result => {
-      let AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+      let AudioContext = (window as any).AudioContext || (window as any).webkitAudioContext;
       console.log({ AudioContext });
       const audioCtx = new AudioContext(); 
       const source = audioCtx.createBufferSource();
