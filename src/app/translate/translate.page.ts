@@ -22,7 +22,6 @@ export class TranslatePage {
   public photo:string;
   public loading:any;
   public entities: Array<any>;
-  public drawComplete:boolean;
   public sourceLang = awsconfig.predictions.convert.translateText.defaults.sourceLanguage;
   public targetLang = awsconfig.predictions.convert.translateText.defaults.targetLanguage;
   
@@ -153,7 +152,6 @@ export class TranslatePage {
    * @param entities Array<Any>
    */
   private drawBoundingBoxes(entities:any) {
-    this.drawComplete = false;
     let canvas = document.getElementById('imgTranslateCanvas') as HTMLCanvasElement;
     let ctx = canvas.getContext("2d");
     let img = document.getElementById("imgTranslate") as HTMLImageElement;
@@ -180,13 +178,16 @@ export class TranslatePage {
       });
     });
     img.hidden = true;
-    this.drawComplete = true;
     canvas.setAttribute('style','width: 100%;');
   }
 
-  copyText(textArea:any) {
+  /**
+   * Copy text to the clipboard
+   * @param textArea HTMLTextArea
+   */
+  public copyText(textArea:any) {
     textArea.select();
-    document.execCommand('copy');
+    (document as any).execCommand('copy');
   }
 
 }

@@ -29,3 +29,14 @@ $ amplify init
 ```
 
 Choose a name for your environment i.e. "dev", then run `amplify push` to create the backend, then run `npm start` to serve the application.
+
+## Hosting
+
+To add hosting to your PWA:
+
+```
+$ amplify add hosting
+$ amplify push
+```
+
+Or you can connect the AWS Amplify Console and provision using git.
