@@ -1,0 +1,22 @@
+# this is an auto generated file. This will be overwritten
+subscription OnCreateSetting {
+  onCreateSetting {
+    id
+    name
+    value
+  }
+}
+subscription OnUpdateSetting {
+  onUpdateSetting {
+    id
+    name
+    value
+  }
+}
+subscription OnDeleteSetting {
+  onDeleteSetting {
+    id
+    name
+    value
+  }
+}

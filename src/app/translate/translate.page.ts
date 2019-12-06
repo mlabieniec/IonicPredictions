@@ -4,7 +4,8 @@ import { LoadingController } from '@ionic/angular';
 import { Hub } from '@aws-amplify/core';
 import awsconfig from 'src/aws-exports';
 import { LoggerService } from '../logger.service';
-
+import { DataStore, Predicates } from "@aws-amplify/datastore";
+import { Setting } from "src/models";
 /**
  * Amplify Predictions - Translation
  * Settings are pulled from the aws-exports.js file and 
@@ -38,6 +39,14 @@ export class TranslatePage {
       if (payload.event === 'target')
         this.targetLang = payload.data;
     });
+    DataStore.query(Setting, c => c.name('eq','translateSource'))
+      .then((setting: Setting[]) => {
+        if (setting && setting[0]) this.sourceLang = setting[0].value;
+      });
+    DataStore.query(Setting, c => c.name('eq','translateTarget'))
+      .then((setting: Setting[]) => {
+        if (setting && setting[0]) this.targetLang = setting[0].value;
+      });
   }
 
   /**
