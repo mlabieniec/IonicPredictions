@@ -5,6 +5,7 @@ An Ionic app that uses [AWS Amplify Predictions](https://aws-amplify.github.io/d
 - Identify and Translate Text from an image using Amazon Transcribe
 - Identify Entities, Faces of Celebrities from an image using Amazon Rekognition
 - Identify and Label Entities in an image using Amazon Rekognition
+- Store locally & Sync settings with the cloud using Amplify DataStore and AWS AppSync
 
 <div style="text-align:center;">
 
