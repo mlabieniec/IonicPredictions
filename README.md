@@ -6,6 +6,7 @@ An Ionic app that uses [AWS Amplify Predictions](https://aws-amplify.github.io/d
 - Identify Entities, Faces of Celebrities from an image using Amazon Rekognition
 - Identify and Label Entities in an image using Amazon Rekognition
 - Store locally & Sync settings with the cloud using Amplify DataStore and AWS AppSync
+- PWA Splash Screen and add to home screen Icon for both iOS and Android
 
 <div style="text-align:center;">
 
