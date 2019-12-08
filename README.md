@@ -24,7 +24,8 @@ From the root of the project, run:
 
 ```bash
 $ npm i -g @aws-amplify/cli
-$ npm install
+$ amplify configure
+$ cd IonicPredictions && npm install
 $ amplify init
 ```
 
