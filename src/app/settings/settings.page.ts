@@ -3,6 +3,7 @@ import awsconfig from 'src/aws-exports';
 import { Hub } from '@aws-amplify/core';
 import { DataStore, Predicates } from "@aws-amplify/datastore";
 import { Setting } from "src/models";
+import { DataService, Language } from '../data.service';
 /**
  * Amplify Predictions - Settings UI
  * Configure settings for the other tabs. Initial settings are 
@@ -22,15 +23,16 @@ export class SettingsPage {
   public defaultTarget = awsconfig.predictions.convert.translateText.defaults.targetLanguage;
   // Enable celebrity detection in identify
   public celebDetect = awsconfig.predictions.identify.identifyEntities.celebrityDetectionEnabled as boolean;
-  
-  public settings = [];
+  // Supported translate languages
+  public langs:Array<Language>;
 
-  constructor() {
+  constructor( private data:DataService ) {
+    // supported translate languages
+    this.langs = this.data.langs;
     // Listen for settings changed from other views
     Hub.listen('settings', (data) => {
       const { payload } = data;
       this.celebDetect = payload.data;
-      // this.save('celebDetect',payload.data);
     });
     this.getSettings('celebDetect')
       .then((setting: Setting) => {

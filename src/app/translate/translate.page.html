@@ -41,6 +41,10 @@
 </ion-content>
 
 <ion-footer>
-    <p style="opacity:0.3;text-align: center;"> {{sourceLang}} <ion-icon name="arrow-round-forward"></ion-icon> {{targetLang}} </p>
+    <p style="opacity:0.3;text-align: center;"> 
+      <a class="lang-btn" href="javascript:void(null)" (click)="onSourceSelect($event)">{{sourceLang}}</a> 
+        <ion-icon name="arrow-round-forward"></ion-icon> 
+      <a class="lang-btn" href="javascript:void(null)" (click)="onTargetSelect($event)">{{targetLang}}</a>
+    </p>
     <ion-button (click)="filepicker.click()" size="large" expand="full">Take or Choose a Photo</ion-button>
 </ion-footer>

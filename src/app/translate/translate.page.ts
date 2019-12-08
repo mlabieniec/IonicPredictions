@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
 import Predictions from '@aws-amplify/predictions';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { Hub } from '@aws-amplify/core';
 import awsconfig from 'src/aws-exports';
 import { LoggerService } from '../logger.service';
 import { DataStore, Predicates } from "@aws-amplify/datastore";
 import { Setting } from "src/models";
+import { Language, DataService } from '../data.service';
+import { PopoverController } from '@ionic/angular';
+import { LanguageSelectComponent } from './language-select/language-select.component';
+
 /**
  * Amplify Predictions - Translation
  * Settings are pulled from the aws-exports.js file and 
@@ -25,11 +29,15 @@ export class TranslatePage {
   public entities: Array<any>;
   public sourceLang = awsconfig.predictions.convert.translateText.defaults.sourceLanguage;
   public targetLang = awsconfig.predictions.convert.translateText.defaults.targetLanguage;
-  
+  public langs:Array<Language>;
 
   constructor( 
     public loadingController: LoadingController,
-    private logger: LoggerService ) { 
+    private logger: LoggerService,
+    private data: DataService,
+    private popoverController: PopoverController,
+    public modalController: ModalController ) {
+    this.langs = data.langs; 
     // Listen for changes in settings from the settings view
     Hub.listen('settings', (data) => {
       const { payload } = data;
@@ -188,6 +196,42 @@ export class TranslatePage {
     });
     img.hidden = true;
     canvas.setAttribute('style','width: 100%;');
+  }
+
+  public onSourceSelect(evt: any):void {
+    this.presentModal('source');
+  }
+
+  public onTargetSelect(evt: any):void {
+    this.presentModal('target');
+  }
+
+  /**
+   * Show the popover for selecting a language
+   * @param ev CustomEvent
+   */
+  public async presentPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: LanguageSelectComponent,
+      event: ev,
+      translucent: true
+    });
+    return await popover.present();
+  }
+
+  /**
+   * Present a modal for language selection
+   * @param type String - type of selection i.e. source or target language
+   */
+  public async presentModal(type:string) {
+    const modal = await this.modalController.create({
+      component: LanguageSelectComponent,
+      componentProps: {
+        'selected': (type === 'source')?this.sourceLang:this.targetLang,
+        'type': type
+      }
+    });
+    return await modal.present();
   }
 
   /**

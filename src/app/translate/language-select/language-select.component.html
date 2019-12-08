@@ -1,0 +1,17 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>{{(type === 'source')?'Source':'Target'}} Language</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <ion-list>
+      <ion-item *ngFor="let lang of data.langs" (click)="select(lang.value)">
+        <ion-label>
+          <span [class.selected]="lang.value === selected">{{lang.name}}</span>
+        </ion-label>
+      </ion-item>
+  </ion-list>
+</ion-content>
