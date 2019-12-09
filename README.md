@@ -8,6 +8,8 @@ An Ionic app that uses [AWS Amplify Predictions](https://aws-amplify.github.io/d
 - Store locally & Sync settings with the cloud using Amplify DataStore and AWS AppSync
 - PWA Splash Screen and add to home screen Icon for both iOS and Android
 
+> This app was demoed at re:Invent 2019, here is the talk/demo: https://t.co/bPEFO9Etww?amp=1
+
 <div style="text-align:center;">
 
 ![Demo Gif](./demo.gif)
