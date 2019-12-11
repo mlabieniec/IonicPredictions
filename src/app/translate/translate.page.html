@@ -49,5 +49,6 @@
         <ion-icon name="arrow-round-forward"></ion-icon> 
       <a class="lang-btn" href="javascript:void(null)" (click)="onTargetSelect($event)">{{targetLang}}</a>
     </p>
-    <ion-button (click)="filepicker.click()" size="large" expand="full">Take or Choose a Photo</ion-button>
+    <ion-button (click)="toggleSpeak()" size="medium" expand="full" [color]="recording">Press to {{ (isRecording)?'End':'Talk' }}</ion-button>
+    <ion-button (click)="filepicker.click()" size="medium" expand="full">Take or Choose a Photo</ion-button>
 </ion-footer>

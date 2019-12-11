@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ɵCompiler_compileModuleSync__POST_R3__ } from '@angular/core';
 import Predictions from '@aws-amplify/predictions';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { Hub } from '@aws-amplify/core';
 import awsconfig from 'src/aws-exports';
 import { LoggerService } from '../logger.service';
-import { DataStore, Predicates } from "@aws-amplify/datastore";
+import { DataStore } from "@aws-amplify/datastore";
 import { Setting } from "src/models";
 import { Language, DataService } from '../data.service';
-import { PopoverController } from '@ionic/angular';
 import { LanguageSelectComponent } from './language-select/language-select.component';
+import { RecorderService } from '../recorder.service';
 
 /**
  * Amplify Predictions - Translation
@@ -31,11 +31,16 @@ export class TranslatePage {
   public targetLang = awsconfig.predictions.convert.translateText.defaults.targetLanguage;
   public langs:Array<Language>;
 
+  private audioContext:AudioContext;
+  private micStream:MediaStreamAudioSourceNode;
+  private bufferSize = 16384;
+  public isRecording = false;
+
   constructor( 
     public loadingController: LoadingController,
     private logger: LoggerService,
-    private data: DataService,
-    private popoverController: PopoverController,
+    private recorder: RecorderService,
+    public data: DataService,
     public modalController: ModalController ) {
     this.langs = data.langs; 
     // Listen for changes in settings from the settings view
@@ -55,6 +60,10 @@ export class TranslatePage {
       .then((setting: Setting[]) => {
         if (setting && setting[0]) this.targetLang = setting[0].value;
       });
+  }
+
+  public get recording() {
+    return (this.isRecording)?'secondary':'primary';
   }
 
   /**
@@ -111,6 +120,53 @@ export class TranslatePage {
         this.logger.log('Predictions.identify -> Error', err);
         this.loading.dismiss();
       })
+  }
+
+  public toggleSpeak() {
+    if (this.isRecording) {
+      this.endSpeak();
+    } else {
+      this.startSpeak();
+    }
+  }
+
+  public async startSpeak() {
+    let AudioContext = (window as any).AudioContext || (window as any).webkitAudioContext;
+    this.audioContext = new AudioContext();
+    console.log('starting recording');
+    navigator.mediaDevices.getUserMedia({audio:true}).then(
+      (stream: MediaStream) => {
+        console.log('retrieving stream');
+        this.micStream = this.audioContext.createMediaStreamSource(stream);
+        this.micStream.connect(this.audioContext.createGain());
+        this.recorder.init(this.micStream, { numChannels: 1 });
+        this.recorder.start().subscribe(
+          (bytes) => {
+            console.log('buffer: ', bytes);
+            Predictions.convert({
+              transcription: {
+                source: {
+                  bytes
+                },
+                // language: "en-US", // other options are "en-GB", "fr-FR", "fr-CA", "es-US"
+              },
+            }).then(({ transcription: { fullText } }) => console.log(fullText))
+              .catch(err => console.error(err))
+          }
+        );
+
+        this.isRecording = true;
+      }).catch((e) => {
+        console.log('Error capturing audio.');
+        console.log(e);
+        this.isRecording = false;
+      });
+  }
+
+  private async endSpeak() {
+    console.log('end recording');
+    this.isRecording = false;
+    this.recorder.stop();
   }
   
   /**
@@ -204,19 +260,6 @@ export class TranslatePage {
 
   public onTargetSelect(evt: any):void {
     this.presentModal('target');
-  }
-
-  /**
-   * Show the popover for selecting a language
-   * @param ev CustomEvent
-   */
-  public async presentPopover(ev: any) {
-    const popover = await this.popoverController.create({
-      component: LanguageSelectComponent,
-      event: ev,
-      translucent: true
-    });
-    return await popover.present();
   }
 
   /**
