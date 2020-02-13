@@ -68,7 +68,7 @@ export class SettingsPage {
    * Load a setting from local DataStore
    * @param name name of the setting to load from the datastore
    */
-  private async getSettings(name:string): Promise<Setting> {
+  private async getSettings(name:string): Promise<Setting> | null {
     const setting = await DataStore.query(Setting, c => c.name('eq',name));
     return (setting)?setting[0]:null;
   }
