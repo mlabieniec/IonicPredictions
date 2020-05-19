@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import awsconfig from 'src/aws-exports';
 import { Hub } from '@aws-amplify/core';
-import { DataStore, Predicates } from "@aws-amplify/datastore";
+import { DataStore } from "@aws-amplify/datastore";
 import { Setting } from "src/models";
 import { DataService, Language } from '../data.service';
 /**
@@ -16,7 +16,7 @@ import { DataService, Language } from '../data.service';
   styleUrls: ['settings.page.scss']
 })
 export class SettingsPage {
-  
+
   // Source language
   public defaultSource = awsconfig.predictions.convert.translateText.defaults.sourceLanguage;
   // Target language
@@ -24,9 +24,9 @@ export class SettingsPage {
   // Enable celebrity detection in identify
   public celebDetect = awsconfig.predictions.identify.identifyEntities.celebrityDetectionEnabled as boolean;
   // Supported translate languages
-  public langs:Array<Language>;
+  public langs: Array<Language>;
 
-  constructor( private data:DataService ) {
+  constructor(private data: DataService) {
     // supported translate languages
     this.langs = this.data.langs;
     // Listen for settings changed from other views
@@ -36,18 +36,18 @@ export class SettingsPage {
     });
     this.getSettings('celebDetect')
       .then((setting: Setting) => {
-        if (setting) this.celebDetect = (setting.value)?true:false;
+        if (setting) this.celebDetect = (setting.value) ? true : false;
       });
     this.getSettings('translateSource')
       .then((setting: Setting) => {
         if (setting) {
           this.defaultSource = setting.value;
           Hub.dispatch(
-            'settings', 
-            { 
-                event: 'source', 
-                data: setting.value
-          });
+            'settings',
+            {
+              event: 'source',
+              data: setting.value
+            });
         }
       });
     this.getSettings('translateTarget')
@@ -55,11 +55,11 @@ export class SettingsPage {
         if (setting) {
           this.defaultTarget = setting.value;
           Hub.dispatch(
-            'settings', 
-            { 
-                event: 'target', 
-                data: setting.value
-          });
+            'settings',
+            {
+              event: 'target',
+              data: setting.value
+            });
         }
       });
   }
@@ -68,9 +68,9 @@ export class SettingsPage {
    * Load a setting from local DataStore
    * @param name name of the setting to load from the datastore
    */
-  private async getSettings(name:string): Promise<Setting> {
-    const setting = await DataStore.query(Setting, c => c.name('eq',name));
-    return (setting)?setting[0]:null;
+  private async getSettings(name: string): Promise<Setting> {
+    const setting = await DataStore.query(Setting, c => c.name('eq', name));
+    return (setting) ? setting[0] : null;
   }
 
   /**
@@ -81,13 +81,13 @@ export class SettingsPage {
   public selectSource(evt): void {
     this.defaultSource = evt.target.value;
     Hub.dispatch(
-      'settings', 
-      { 
-          event: 'source', 
-          data: evt.target.value
-    });
+      'settings',
+      {
+        event: 'source',
+        data: evt.target.value
+      });
     this.getSettings('translateSource')
-      .then((setting:Setting) => {
+      .then((setting: Setting) => {
         if (setting) {
           this.save(setting.name, evt.target.value, setting.id);
         } else {
@@ -101,16 +101,16 @@ export class SettingsPage {
    * dispatch Hub event for other views
    * @param evt CustomEvent
    */
-  public selectTarget(evt):void {
+  public selectTarget(evt): void {
     this.defaultTarget = evt.target.value;
     Hub.dispatch(
-      'settings', 
-      { 
-          event: 'target', 
-          data: evt.target.value
-    });
+      'settings',
+      {
+        event: 'target',
+        data: evt.target.value
+      });
     this.getSettings('translateTarget')
-      .then((setting:Setting) => {
+      .then((setting: Setting) => {
         if (setting) {
           this.save(setting.name, evt.target.value, setting.id);
         } else {
@@ -123,7 +123,7 @@ export class SettingsPage {
    * Toggle celebrity detection on/off for identify entities
    * @param evt CustomEvent
    */
-  public toggleCelebDetect(evt):void {
+  public toggleCelebDetect(evt): void {
     this.celebDetect = evt.detail.checked;
     Hub.dispatch(
       'settings',
@@ -133,7 +133,7 @@ export class SettingsPage {
       }
     );
     this.getSettings('celebDetect')
-      .then((setting:Setting) => {
+      .then((setting: Setting) => {
         if (setting) {
           this.save(setting.name, evt.detail.checked, setting.id);
         } else {
@@ -152,10 +152,10 @@ export class SettingsPage {
       console.log('updating existing setting');
       const setting: Setting = await DataStore.query(Setting, id);
       await DataStore.save(Setting.copyOf(setting, updated => {
-          updated.value = value;
-          updated.name = setting.name;
-        })
-      );  
+        updated.value = value;
+        updated.name = setting.name;
+      })
+      );
     } else {
       console.log('saving new setting');
       await DataStore.save(new Setting({

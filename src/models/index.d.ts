@@ -2,6 +2,8 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 
 
 
+
+
 export declare class Setting {
   readonly id: string;
   readonly name: string;
