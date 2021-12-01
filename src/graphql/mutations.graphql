@@ -7,6 +7,8 @@ mutation CreateSetting(
     id
     name
     value
+    createdAt
+    updatedAt
   }
 }
 mutation UpdateSetting(
@@ -17,6 +19,8 @@ mutation UpdateSetting(
     id
     name
     value
+    createdAt
+    updatedAt
   }
 }
 mutation DeleteSetting(
@@ -27,5 +31,7 @@ mutation DeleteSetting(
     id
     name
     value
+    createdAt
+    updatedAt
   }
 }

@@ -4,6 +4,8 @@ subscription OnCreateSetting {
     id
     name
     value
+    createdAt
+    updatedAt
   }
 }
 subscription OnUpdateSetting {
@@ -11,6 +13,8 @@ subscription OnUpdateSetting {
     id
     name
     value
+    createdAt
+    updatedAt
   }
 }
 subscription OnDeleteSetting {
@@ -18,5 +22,7 @@ subscription OnDeleteSetting {
     id
     name
     value
+    createdAt
+    updatedAt
   }
 }

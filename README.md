@@ -18,9 +18,9 @@ An Ionic app that uses [AWS Amplify Predictions](https://aws-amplify.github.io/d
 
 ## Requirements
 
-- Amplify CLI `npm i -g @aws-amplify/cli`
-- Ionic `npm i -g ionic`
-- [AWS Account](https://aws-amplify.github.io/docs/)
+- [Amplify CLI](https://docs.amplify.aws/cli/start/install/) `npm i -g @aws-amplify/cli`
+- Ionic `npm i -g @ionic/cli`
+- [AWS Account](https://portal.aws.amazon.com/billing/signup?redirect_url=https%3A%2F%2Faws.amazon.com%2Fregistration-confirmation#/start)
 
 ## Setup
 
@@ -44,4 +44,4 @@ $ amplify add hosting
 $ amplify push
 ```
 
-Or you can connect the AWS Amplify Console and provision using git.
+*Or you can connect the AWS Amplify Console and provision using git.

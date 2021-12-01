@@ -1,17 +1,17 @@
 {
-    "projectName": "photo-translate",
-    "version": "2.0",
-    "frontend": "javascript",
-    "javascript": {
-        "framework": "ionic",
-        "config": {
-            "SourceDir": "src",
-            "DistributionDir": "www",
-            "BuildCommand": "npm run-script build",
-            "StartCommand": "npm start"
-        }
-    },
-    "providers": [
-        "awscloudformation"
-    ]
+  "projectName": "photo-translate",
+  "version": "3.1",
+  "frontend": "javascript",
+  "javascript": {
+    "framework": "ionic",
+    "config": {
+      "SourceDir": "src",
+      "DistributionDir": "www",
+      "BuildCommand": "npm run-script build",
+      "StartCommand": "npm start"
+    }
+  },
+  "providers": [
+    "awscloudformation"
+  ]
 }

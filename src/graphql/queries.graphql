@@ -4,6 +4,8 @@ query GetSetting($id: ID!) {
     id
     name
     value
+    createdAt
+    updatedAt
   }
 }
 query ListSettings(
@@ -16,6 +18,8 @@ query ListSettings(
       id
       name
       value
+      createdAt
+      updatedAt
     }
     nextToken
   }

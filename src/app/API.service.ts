@@ -2,9 +2,12 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 import { Injectable } from "@angular/core";
-import API, { graphqlOperation } from "@aws-amplify/api";
-import { GraphQLResult } from "@aws-amplify/api/lib/types";
-import * as Observable from "zen-observable";
+import API, { graphqlOperation, GraphQLResult } from "@aws-amplify/api-graphql";
+import { Observable } from "zen-observable-ts";
+
+export interface SubscriptionResponse<T> {
+  value: GraphQLResult<T>;
+}
 
 export type CreateSettingInput = {
   id?: string | null;
@@ -59,6 +62,15 @@ export type ModelSizeInput = {
   between?: Array<number | null> | null;
 };
 
+export type Setting = {
+  __typename: "Setting";
+  id?: string;
+  name?: string;
+  value?: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
 export type UpdateSettingInput = {
   id: string;
   name?: string | null;
@@ -66,7 +78,7 @@ export type UpdateSettingInput = {
 };
 
 export type DeleteSettingInput = {
-  id?: string | null;
+  id: string;
 };
 
 export type ModelSettingFilterInput = {
@@ -94,32 +106,46 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null;
 };
 
+export type ModelSettingConnection = {
+  __typename: "ModelSettingConnection";
+  items?: Array<Setting>;
+  nextToken?: string | null;
+};
+
 export type CreateSettingMutation = {
   __typename: "Setting";
   id: string;
   name: string;
-  value: string | null;
+  value?: string | null;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type UpdateSettingMutation = {
   __typename: "Setting";
   id: string;
   name: string;
-  value: string | null;
+  value?: string | null;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type DeleteSettingMutation = {
   __typename: "Setting";
   id: string;
   name: string;
-  value: string | null;
+  value?: string | null;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type GetSettingQuery = {
   __typename: "Setting";
   id: string;
   name: string;
-  value: string | null;
+  value?: string | null;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type ListSettingsQuery = {
@@ -128,30 +154,38 @@ export type ListSettingsQuery = {
     __typename: "Setting";
     id: string;
     name: string;
-    value: string | null;
-  } | null> | null;
-  nextToken: string | null;
+    value?: string | null;
+    createdAt: string;
+    updatedAt: string;
+  }>;
+  nextToken?: string | null;
 };
 
 export type OnCreateSettingSubscription = {
   __typename: "Setting";
   id: string;
   name: string;
-  value: string | null;
+  value?: string | null;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type OnUpdateSettingSubscription = {
   __typename: "Setting";
   id: string;
   name: string;
-  value: string | null;
+  value?: string | null;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type OnDeleteSettingSubscription = {
   __typename: "Setting";
   id: string;
   name: string;
-  value: string | null;
+  value?: string | null;
+  createdAt: string;
+  updatedAt: string;
 };
 
 @Injectable({
@@ -168,6 +202,8 @@ export class APIService {
           id
           name
           value
+          createdAt
+          updatedAt
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -191,6 +227,8 @@ export class APIService {
           id
           name
           value
+          createdAt
+          updatedAt
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -214,6 +252,8 @@ export class APIService {
           id
           name
           value
+          createdAt
+          updatedAt
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -234,6 +274,8 @@ export class APIService {
           id
           name
           value
+          createdAt
+          updatedAt
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -257,6 +299,8 @@ export class APIService {
             id
             name
             value
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -277,7 +321,7 @@ export class APIService {
     return <ListSettingsQuery>response.data.listSettings;
   }
   OnCreateSettingListener: Observable<
-    OnCreateSettingSubscription
+    SubscriptionResponse<OnCreateSettingSubscription>
   > = API.graphql(
     graphqlOperation(
       `subscription OnCreateSetting {
@@ -286,13 +330,15 @@ export class APIService {
           id
           name
           value
+          createdAt
+          updatedAt
         }
       }`
     )
-  ) as Observable<OnCreateSettingSubscription>;
+  ) as Observable<SubscriptionResponse<OnCreateSettingSubscription>>;
 
   OnUpdateSettingListener: Observable<
-    OnUpdateSettingSubscription
+    SubscriptionResponse<OnUpdateSettingSubscription>
   > = API.graphql(
     graphqlOperation(
       `subscription OnUpdateSetting {
@@ -301,13 +347,15 @@ export class APIService {
           id
           name
           value
+          createdAt
+          updatedAt
         }
       }`
     )
-  ) as Observable<OnUpdateSettingSubscription>;
+  ) as Observable<SubscriptionResponse<OnUpdateSettingSubscription>>;
 
   OnDeleteSettingListener: Observable<
-    OnDeleteSettingSubscription
+    SubscriptionResponse<OnDeleteSettingSubscription>
   > = API.graphql(
     graphqlOperation(
       `subscription OnDeleteSetting {
@@ -316,8 +364,10 @@ export class APIService {
           id
           name
           value
+          createdAt
+          updatedAt
         }
       }`
     )
-  ) as Observable<OnDeleteSettingSubscription>;
+  ) as Observable<SubscriptionResponse<OnDeleteSettingSubscription>>;
 }
